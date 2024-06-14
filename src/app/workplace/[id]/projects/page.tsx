@@ -1,8 +1,12 @@
+import { ProjectToolbar, ProjectList } from "@/containers";
+
 const ProjectsPage = () => {
   return (
-    <div>
-      <h1>Projects Page</h1>
-    </div>
+    <section className="flex flex-col gap-4">
+      <ProjectToolbar />
+
+      <ProjectList />
+    </section>
   );
 };
 
