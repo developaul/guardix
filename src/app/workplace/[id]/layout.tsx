@@ -1,13 +1,16 @@
 import { FC, PropsWithChildren } from "react";
 
-import { Header } from "@/containers";
+import { Header, Aside } from "@/containers";
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <>
+    <div className="flex flex-col h-dvh overflow-hidden">
       <Header />
-      <main>{children}</main>
-    </>
+      <div className="flex flex-1">
+        <Aside />
+        <main className="flex-1 min-h-0">{children}</main>
+      </div>
+    </div>
   );
 };
 

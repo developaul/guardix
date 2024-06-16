@@ -11,6 +11,26 @@ const projects = [
     name: "Project 2",
     description: "This is a project",
   },
+  {
+    id: 3,
+    name: "Project 3",
+    description: "This is a project",
+  },
+  {
+    id: 4,
+    name: "Project 4",
+    description: "This is a project",
+  },
+  {
+    id: 5,
+    name: "Project 5",
+    description: "This is a project",
+  },
+  {
+    id: 6,
+    name: "Project 6",
+    description: "This is a project",
+  },
 ];
 
 export const ProjectList = () => {
