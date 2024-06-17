@@ -18,12 +18,9 @@ const workplaceSchema = z.object({
 
 class WorkplaceController {
   async getWorkplaces() {
-    const userId = "1";
-
     const { data: worksplaces } = await supabase
       .from(TABLES.WORKPLACES)
-      .select()
-      .eq("created_by_id", userId);
+      .select();
 
     return worksplaces;
   }

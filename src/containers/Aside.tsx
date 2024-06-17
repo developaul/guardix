@@ -1,25 +1,25 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { Shield } from "lucide-react";
 import clsx from "clsx";
 
 import { resources } from "@/lib";
+import { WorkplaceSelect } from "@/components/WorkplaceSelect";
 
 export const Aside = () => {
   const params = useParams();
+  console.log("🚀 ~ Aside ~ params:", params);
 
   return (
     <aside className="w-56 bg-gray-200 p-4">
       <nav className="grid gap-6 text-lg font-medium">
-        <Link
-          href="#"
-          className="flex items-center gap-2 text-lg font-semibold"
-        >
-          <Shield className="h-6 w-6" />
-          <span className="sr-only">Guardix</span>
-        </Link>
+        <WorkplaceSelect
+          resourcePathname="/projects"
+          workplaceIdSelected={params.id.toString()}
+        />
+
         {resources.map(({ pathname, name, Icon }) => {
           const isActive = pathname === "activeResourcePathname";
 

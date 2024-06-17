@@ -1,7 +1,10 @@
+"use server";
+
 import { workplaceController } from "../controllers";
 
 export const getWorkplaces = async () => {
-  return workplaceController.getWorkplaces();
+  // return workplaceController.getWorkplaces();
+  return [];
 };
 
 export const postWorkplace = async (args: any) => {
