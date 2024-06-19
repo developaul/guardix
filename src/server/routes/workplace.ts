@@ -1,5 +1,6 @@
 "use server";
 
+import { workplaceSchemaFormType, workplaceSchemaType } from "@/constants";
 import { workplaceController } from "../controllers";
 
 export const getWorkplaces = async () => {
@@ -7,7 +8,9 @@ export const getWorkplaces = async () => {
   return [];
 };
 
-export const postWorkplace = async (args: any) => {
+export const createWorkplace = async (
+  args: workplaceSchemaFormType
+): Promise<workplaceSchemaType> => {
   return workplaceController.createWorkplace(args);
 };
 

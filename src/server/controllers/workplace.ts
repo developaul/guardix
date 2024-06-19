@@ -1,20 +1,11 @@
-import { z } from "zod";
-
-import { TABLES } from "@/constants";
+import {
+  HTTP_STATUS,
+  TABLES,
+  workplaceSchema,
+  workplaceSchemaFormType,
+  workplaceSchemaType,
+} from "@/constants";
 import { supabase } from "../connections";
-
-interface CreateWorkplaceArgs {
-  title: string;
-  description: string;
-  created_by_id: string;
-}
-
-const workplaceSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  created_by_id: z.string(),
-  created_at: z.string().datetime(),
-});
 
 class WorkplaceController {
   async getWorkplaces() {
@@ -25,14 +16,22 @@ class WorkplaceController {
     return worksplaces;
   }
 
-  async createWorkplace(args: CreateWorkplaceArgs) {
-    const { data, success, error } = workplaceSchema.safeParse(args);
+  async createWorkplace(
+    args: workplaceSchemaFormType
+  ): Promise<workplaceSchemaType> {
+    const { data: fields, success, error } = workplaceSchema.safeParse(args);
 
     if (!success) throw new Error(error.message);
 
-    const { data: workplace } = await supabase
+    const { data, status } = await supabase
       .from(TABLES.WORKPLACES)
-      .insert(data);
+      .insert(fields)
+      .select();
+
+    if (status !== HTTP_STATUS.CREATED)
+      throw new Error("Failed to create workplace");
+
+    const [workplace] = data!;
 
     return workplace;
   }

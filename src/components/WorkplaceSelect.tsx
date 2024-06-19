@@ -1,3 +1,7 @@
+import { FC, useState } from "react";
+import Link from "next/link";
+import { PlusIcon } from "lucide-react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -6,13 +10,16 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import Link from "next/link";
-import { FC } from "react";
+
+import { CreateWorkplaceForm } from "./CreateWorkplaceForm";
+import { workplaceSchemaFormType } from "@/constants";
+import { createWorkplace } from "@/server/routes";
+import { useRouter } from "next/navigation";
 
 const workplaces = [
   {
     id: "1",
-    title: "Workplace One",
+    title: "Workplace One One One",
     description: "This is a description of Workplace One",
     created_at: "2023-01-01T00:00:00.000Z",
     created_by_id: "123123123",
@@ -49,7 +56,9 @@ export const WorkplaceSelect: FC<WorkplaceSelectProps> = ({
   workplaceIdSelected,
   resourcePathname,
 }) => {
-  console.log("🚀 ~ WorkplaceSelect ~ workplaces:", workplaces);
+  const router = useRouter();
+
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   const currentWorkplace = workplaces.find(
     (workplace) => workplace.id === workplaceIdSelected
@@ -59,29 +68,57 @@ export const WorkplaceSelect: FC<WorkplaceSelectProps> = ({
     (workplace) => workplace.id !== workplaceIdSelected
   );
 
+  const handleToggleDialog = () => setDialogIsOpen((prev) => !prev);
+
+  const handleAddWorkplace = async ({ name }: workplaceSchemaFormType) => {
+    try {
+      const workplace = await createWorkplace({ name });
+      router.push(`/workplace/${workplace.id}/${resourcePathname}`);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      handleToggleDialog();
+    }
+  };
+
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>
-            {currentWorkplace?.title}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="flex flex-col min-w-[150px]">
-            {restWorkplaces.map(({ id, title }) => (
-              <Link
-                key={id}
-                href={`/workplace/${id}/${resourcePathname}`}
-                legacyBehavior
-                passHref
+    <>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="w-[200px]">
+              {currentWorkplace?.title}
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="flex flex-col min-w-[200px]">
+              {restWorkplaces.map(({ id, title }) => (
+                <Link
+                  key={id}
+                  href={`/workplace/${id}/${resourcePathname}`}
+                  legacyBehavior
+                  passHref
+                >
+                  <NavigationMenuLink className="p-4 border border-gray-200 hover:bg-gray-100 hover:text-gray-900 text-sm">
+                    {title}
+                  </NavigationMenuLink>
+                </Link>
+              ))}
+              <NavigationMenuLink
+                onClick={handleToggleDialog}
+                className="p-4 border border-gray-200 hover:bg-gray-100 hover:text-gray-900 text-sm flex items-center gap-1 cursor-pointer"
               >
-                <NavigationMenuLink className="p-4 border border-gray-200 hover:bg-gray-100 hover:text-gray-900 text-sm">
-                  {title}
-                </NavigationMenuLink>
-              </Link>
-            ))}
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+                <PlusIcon className="h-6 w-6" />
+                Create Workplace
+              </NavigationMenuLink>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+
+      <CreateWorkplaceForm
+        isOpen={dialogIsOpen}
+        handleToggleDialog={handleToggleDialog}
+        onSubmit={handleAddWorkplace}
+      />
+    </>
   );
 };
