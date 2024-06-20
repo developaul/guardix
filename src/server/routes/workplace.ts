@@ -3,7 +3,7 @@
 import { workplaceSchemaFormType, workplaceSchemaType } from "@/constants";
 import { workplaceController } from "../controllers";
 
-export const getWorkplaces = async () => {
+export const getWorkplaces = async (): Promise<workplaceSchemaType[]> => {
   // return workplaceController.getWorkplaces();
   return [];
 };

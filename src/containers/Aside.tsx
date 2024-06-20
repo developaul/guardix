@@ -1,23 +1,20 @@
-"use client";
-
-import { useParams, useSelectedLayoutSegments } from "next/navigation";
+import { Suspense } from "react";
 import Link from "next/link";
 import clsx from "clsx";
 
 import { resources } from "@/lib";
-import { WorkplaceSelect } from "@/components/WorkplaceSelect";
+import WorkplaceSelect from "@/components/WorkplaceSelect";
 
-export const Aside = () => {
-  const params = useParams();
-  const [activeResourcePathname] = useSelectedLayoutSegments();
-
+export const Aside = ({ activeResourcePathname, workplaceIdSelected }: any) => {
   return (
     <aside className="w-56 bg-gray-200 p-4">
       <nav className="grid gap-6 text-lg font-medium">
-        <WorkplaceSelect
-          resourcePathname={activeResourcePathname ?? "projects"}
-          workplaceIdSelected={params.id.toString()}
-        />
+        <Suspense fallback={<div>Loading...</div>}>
+          <WorkplaceSelect
+            resourcePathname={activeResourcePathname}
+            workplaceIdSelected={workplaceIdSelected}
+          />
+        </Suspense>
 
         {resources.map(({ pathname, name, Icon }) => {
           const isActive = pathname === activeResourcePathname;
@@ -25,7 +22,7 @@ export const Aside = () => {
           return (
             <Link
               key={name}
-              href={`/workplace/${params.id}/${pathname}`}
+              href={`/workplace/${workplaceIdSelected}/${pathname}`}
               className={clsx("flex gap-2 text-gray-500 hover:text-gray-900", {
                 ["text-gray-900"]: isActive,
               })}
