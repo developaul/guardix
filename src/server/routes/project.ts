@@ -1,7 +1,8 @@
 "use server";
 
-import { IProject } from "@/interfaces";
+import { IProject, IProjectForm } from "@/interfaces";
 import { projectController } from "../controllers/project";
+import { redirect } from "next/navigation";
 
 const projects = [
   {
@@ -38,4 +39,10 @@ const projects = [
 
 export const getProjects = (workplaceId: string): Promise<IProject[]> => {
   return projectController.getProjects(workplaceId);
+};
+
+export const createProject = async (args: IProjectForm): Promise<void> => {
+  const { id, workplace_id } = await projectController.createProject(args);
+
+  redirect(`/workplace/${workplace_id}/projects/${id}`);
 };

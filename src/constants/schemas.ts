@@ -12,7 +12,8 @@ export const workplaceSchema = z
 
 export const projectSchemaForm = z.object({
   name: z.string().min(2).max(25),
-  description: z.string().min(2).max(150).optional(),
+  description: z.string().max(150).optional(),
+  workplace_id: z.string().uuid(),
 });
 
 export const projectSchema = z
