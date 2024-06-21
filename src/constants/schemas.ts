@@ -10,8 +10,13 @@ export const workplaceSchema = z
   })
   .extend(workplaceSchemaForm.shape);
 
-export type workplaceSchemaFormType = z.infer<typeof workplaceSchemaForm>;
+export const projectSchemaForm = z.object({
+  name: z.string().min(2).max(25),
+  description: z.string().min(2).max(150).optional(),
+});
 
-export interface workplaceSchemaType extends z.infer<typeof workplaceSchema> {
-  id: string;
-}
+export const projectSchema = z
+  .object({
+    created_at: z.string().datetime().default(new Date().toISOString()),
+  })
+  .extend(projectSchemaForm.shape);

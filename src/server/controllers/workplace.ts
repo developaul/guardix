@@ -1,11 +1,6 @@
-import {
-  HTTP_STATUS,
-  TABLES,
-  workplaceSchema,
-  workplaceSchemaFormType,
-  workplaceSchemaType,
-} from "@/constants";
+import { HTTP_STATUS, TABLES, workplaceSchema } from "@/constants";
 import { supabase } from "../connections";
+import { workplaceSchemaFormType, workplaceSchemaType } from "@/interfaces";
 
 class WorkplaceController {
   async getWorkplaces() {
