@@ -1,19 +1,20 @@
 import { HTTP_STATUS, TABLES, workplaceSchema } from "@/constants";
 import { supabase } from "../connections";
-import { workplaceSchemaFormType, workplaceSchemaType } from "@/interfaces";
+import { IWorkplaceForm, IWorkplace } from "@/interfaces";
 
 class WorkplaceController {
-  async getWorkplaces() {
+  async getWorkplaces(): Promise<IWorkplace[]> {
     const { data: worksplaces } = await supabase
       .from(TABLES.WORKPLACES)
-      .select();
+      .select()
+      .returns<IWorkplace[]>();
+
+    if (!worksplaces) throw new Error("Failed to get workplaces");
 
     return worksplaces;
   }
 
-  async createWorkplace(
-    args: workplaceSchemaFormType
-  ): Promise<workplaceSchemaType> {
+  async createWorkplace(args: IWorkplaceForm): Promise<IWorkplace> {
     const { data: fields, success, error } = workplaceSchema.safeParse(args);
 
     if (!success) throw new Error(error.message);

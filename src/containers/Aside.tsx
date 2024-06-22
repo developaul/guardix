@@ -1,20 +1,20 @@
-import { Suspense } from "react";
+"use client";
+
+import { FC, PropsWithChildren } from "react";
+import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 
 import { resources } from "@/lib";
-import WorkplaceSelect from "@/components/WorkplaceSelect";
 
-export const Aside = ({ activeResourcePathname, workplaceIdSelected }: any) => {
+export const Aside: FC<PropsWithChildren> = ({ children }) => {
+  const { id: workplaceIdSelected } = useParams();
+  const [activeResourcePathname] = useSelectedLayoutSegments();
+
   return (
     <aside className="w-56 bg-gray-200 p-4">
       <nav className="grid gap-6 text-lg font-medium">
-        <Suspense fallback={<div>Loading...</div>}>
-          <WorkplaceSelect
-            resourcePathname={activeResourcePathname}
-            workplaceIdSelected={workplaceIdSelected}
-          />
-        </Suspense>
+        {children}
 
         {resources.map(({ pathname, name, Icon }) => {
           const isActive = pathname === activeResourcePathname;
