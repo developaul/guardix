@@ -36,11 +36,15 @@ interface Props {
 }
 
 export const CreateProjectForm: FC<Props> = ({ isOpen, onClose }) => {
-  const { id } = useParams();
+  const { workplaceId } = useParams();
 
   const form = useForm<IProjectForm>({
     resolver: zodResolver(projectSchemaForm),
-    defaultValues: { name: "", description: "", workplace_id: id.toString() },
+    defaultValues: {
+      name: "",
+      description: "",
+      workplace_id: workplaceId.toString(),
+    },
   });
 
   const { isSubmitting, isDirty } = form.formState;

@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const WorkplaceList: FC<Props> = ({ workplaces }) => {
-  const { id: workplaceIdSelected } = useParams();
+  const { workplaceId: workplaceIdSelected } = useParams();
 
   const [resourcePathname] = useSelectedLayoutSegments();
 

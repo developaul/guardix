@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { resources } from "@/lib";
 
 export const Aside: FC<PropsWithChildren> = ({ children }) => {
-  const { id: workplaceIdSelected } = useParams();
+  const { workplaceId } = useParams();
   const [activeResourcePathname] = useSelectedLayoutSegments();
 
   return (
@@ -22,7 +22,7 @@ export const Aside: FC<PropsWithChildren> = ({ children }) => {
           return (
             <Link
               key={name}
-              href={`/workplace/${workplaceIdSelected}/${pathname}`}
+              href={`/workplace/${workplaceId}/${pathname}`}
               className={clsx("flex gap-2 text-gray-500 hover:text-gray-900", {
                 ["text-gray-900"]: isActive,
               })}

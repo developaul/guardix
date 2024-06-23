@@ -3,18 +3,18 @@ import { NextPage } from "next";
 import { Suspense } from "react";
 
 interface Props {
-  params: { id: string };
+  params: { workplaceId: string };
 }
 
 const ProjectsPage: NextPage<Props> = ({ params }) => {
-  const { id } = params;
+  const { workplaceId } = params;
 
   return (
     <section className="flex flex-col gap-4 px-8">
       <ProjectToolbar />
 
       <Suspense fallback={<div>Loading...</div>}>
-        <ProjectList workspaceId={id} />
+        <ProjectList workspaceId={workplaceId} />
       </Suspense>
     </section>
   );
