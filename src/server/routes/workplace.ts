@@ -1,5 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 import { IWorkplace, IWorkplaceForm } from "@/interfaces";
 import { workplaceController } from "../controllers";
 
@@ -8,9 +11,15 @@ export const getWorkplaces = async (): Promise<IWorkplace[]> => {
 };
 
 export const createWorkplace = async (
-  args: IWorkplaceForm
+  args: IWorkplaceForm,
+  resourcePathname: string
 ): Promise<IWorkplace> => {
-  return workplaceController.createWorkplace(args);
+  const workplace = await workplaceController.createWorkplace(args);
+
+  const pathname = `/workplace/${workplace.id}/${resourcePathname}`;
+
+  revalidatePath(pathname);
+  redirect(pathname);
 };
 
 export const deleteWorkplace = async (workplaceId: string) => {

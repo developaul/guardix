@@ -1,5 +1,5 @@
-import { workplaceSchema, workplaceSchemaForm } from "@/constants";
 import { z } from "zod";
+import { workplaceSchema, workplaceSchemaForm } from "@/constants";
 
 export interface IWorkplace extends z.infer<typeof workplaceSchema> {
   id: string;

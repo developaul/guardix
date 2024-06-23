@@ -3,6 +3,8 @@
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useSelectedLayoutSegments } from "next/navigation";
+
 import {
   Dialog,
   DialogContent,
@@ -19,35 +21,46 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
-import { workplaceSchema, workplaceSchemaFormType } from "@/constants";
+import { workplaceSchema } from "@/constants";
+import { IWorkplaceForm } from "@/interfaces";
+import { createWorkplace } from "@/server/routes";
 
 interface CreateWorkplaceFormProps {
   isOpen: boolean;
-  handleToggleDialog: () => void;
-  onSubmit: (args: workplaceSchemaFormType) => void;
+  onClose: () => void;
 }
 
 export const CreateWorkplaceForm: FC<CreateWorkplaceFormProps> = ({
   isOpen,
-  handleToggleDialog,
-  onSubmit,
+  onClose,
 }) => {
-  const form = useForm<workplaceSchemaFormType>({
+  const [resourcePathname] = useSelectedLayoutSegments();
+
+  const form = useForm<IWorkplaceForm>({
     resolver: zodResolver(workplaceSchema),
     defaultValues: { name: "" },
   });
 
   const { isSubmitting, isDirty } = form.formState;
 
+  const handleSubmit = async (args: IWorkplaceForm) => {
+    try {
+      await createWorkplace(args, resourcePathname);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      onClose();
+    }
+  };
+
   return (
     <Dialog open={isOpen}>
       <DialogContent
-        onClose={handleToggleDialog}
-        onEscapeKeyDown={handleToggleDialog}
+        onClose={onClose}
+        onEscapeKeyDown={onClose}
         className="sm:max-w-md"
       >
         <DialogHeader>
@@ -59,7 +72,10 @@ export const CreateWorkplaceForm: FC<CreateWorkplaceFormProps> = ({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-8"
+          >
             <FormField
               disabled={isSubmitting}
               control={form.control}

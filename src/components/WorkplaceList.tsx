@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useParams, useSelectedLayoutSegments } from "next/navigation";
 import { FC, useState } from "react";
 import { PlusIcon } from "lucide-react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,8 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { IWorkplace, IWorkplaceForm } from "@/interfaces";
-import { useParams, useSelectedLayoutSegments } from "next/navigation";
+import { IWorkplace } from "@/interfaces";
 import { CreateWorkplaceForm } from "./CreateWorkplaceForm";
 
 interface Props {
@@ -28,10 +29,6 @@ export const WorkplaceList: FC<Props> = ({ workplaces }) => {
 
   const handleToggleDialog = () => {
     setDialogIsOpen((prev) => !prev);
-  };
-
-  const handleAddWorkplace = async (args: IWorkplaceForm) => {
-    console.log("🚀 ~ handleAddWorkplace ~ args:", args);
   };
 
   const currentWorkplace = workplaces.find(
@@ -75,11 +72,7 @@ export const WorkplaceList: FC<Props> = ({ workplaces }) => {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <CreateWorkplaceForm
-        isOpen={dialogIsOpen}
-        handleToggleDialog={handleToggleDialog}
-        onSubmit={handleAddWorkplace}
-      />
+      <CreateWorkplaceForm isOpen={dialogIsOpen} onClose={handleToggleDialog} />
     </>
   );
 };

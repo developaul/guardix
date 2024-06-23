@@ -4,7 +4,7 @@ import { TABLES, projectSchema } from "@/constants";
 
 class ProjectController {
   async getProjects(workplaceId: string): Promise<IProject[]> {
-    const { data: projects, ...rest } = await supabase
+    const { data: projects } = await supabase
       .from(TABLES.PROJECTS)
       .select()
       .in("workplace_id", [workplaceId])
