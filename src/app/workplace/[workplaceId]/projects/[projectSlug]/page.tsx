@@ -4,13 +4,14 @@ import { NextPage } from "next";
 import { BreadcrumbProject } from "@/containers";
 import { TypographySmall } from "@/components/ui/Typography";
 import { ArrowRightIcon } from "lucide-react";
+import { StageList } from "@/containers/StageList";
 
 interface Props {
-  params: { projectName: string };
+  params: { projectSlug: string };
 }
 
 const ProjectPage: NextPage<Props> = ({ params }) => {
-  const { projectName } = params;
+  const { projectSlug } = params;
 
   return (
     <section className="flex flex-col gap-4 px-8">
@@ -27,6 +28,8 @@ const ProjectPage: NextPage<Props> = ({ params }) => {
           <ArrowRightIcon className="inline-block w-4 h-4 ml-1" />
         </a>
       </TypographySmall>
+
+      <StageList projectSlug={projectSlug} />
     </section>
   );
 };

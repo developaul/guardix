@@ -9,7 +9,7 @@ export const getProjects = (workplaceId: string): Promise<IProject[]> => {
 };
 
 export const createProject = async (args: IProjectForm): Promise<void> => {
-  const { id, workplace_id } = await projectController.createProject(args);
+  const { workplace_id, slug } = await projectController.createProject(args);
 
-  redirect(`/workplace/${workplace_id}/projects/${id}`);
+  redirect(`/workplace/${workplace_id}/projects/${slug}`);
 };

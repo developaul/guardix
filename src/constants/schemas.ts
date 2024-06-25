@@ -23,3 +23,16 @@ export const projectSchema = z
     created_at: z.string().datetime().default(new Date().toISOString()),
   })
   .extend(projectSchemaForm.shape);
+
+// Stage
+export const stageSchemaForm = z.object({
+  name: z.string().min(2).max(25),
+  workplace_id: z.string().uuid(),
+  project_slug: z.string(),
+});
+
+export const stageSchema = z
+  .object({
+    created_at: z.string().datetime().default(new Date().toISOString()),
+  })
+  .extend(stageSchemaForm.omit({ project_slug: true }).shape);

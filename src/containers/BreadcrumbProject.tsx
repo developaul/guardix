@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 export const BreadcrumbProject = () => {
-  const { workplaceId, projectName } = useParams();
+  const { workplaceId, projectSlug } = useParams();
 
   return (
     <Breadcrumb>
@@ -32,9 +32,9 @@ export const BreadcrumbProject = () => {
           <BreadcrumbLink asChild>
             <Link
               className="text-xl font-medium"
-              href={`/workplace/${workplaceId}/projects/${projectName}`}
+              href={`/workplace/${workplaceId}/projects/${projectSlug}`}
             >
-              {projectName}
+              {projectSlug}
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>

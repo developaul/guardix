@@ -35,6 +35,20 @@ class ProjectController {
 
     return project;
   }
+
+  async getProjectBySlug(slug: string): Promise<IProject> {
+    const { data: projects } = await supabase
+      .from(TABLES.PROJECTS)
+      .select()
+      .eq("slug", slug)
+      .returns<IProject[]>();
+
+    if (!projects) throw new Error("Failed to get project");
+
+    const [project] = projects;
+
+    return project;
+  }
 }
 
 export const projectController = new ProjectController();
