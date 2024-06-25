@@ -1,6 +1,7 @@
 import { IProject, IProjectForm } from "@/interfaces";
 import { supabase } from "../connections";
 import { TABLES, projectSchema } from "@/constants";
+import { getSlug } from "@/lib/utils";
 
 class ProjectController {
   async getProjects(workplaceId: string): Promise<IProject[]> {
@@ -20,9 +21,11 @@ class ProjectController {
 
     if (!success) throw new Error(error.message);
 
+    const slug = getSlug(fields.name);
+
     const { data: projects } = await supabase
       .from(TABLES.PROJECTS)
-      .insert(fields)
+      .insert({ ...fields, slug })
       .select()
       .returns<IProject[]>();
 
