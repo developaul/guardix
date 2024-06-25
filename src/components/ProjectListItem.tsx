@@ -18,9 +18,11 @@ export const ProjectListItem: FC<Props> = ({ project }) => {
   return (
     <>
       <Link href={`${pathname}/${name}`}>
-        <li className="px-2 py-4 hover:bg-gray-100 transition-all ease-in-out duration-300 cursor-pointer">
+        <li className="h-16 px-2 py-2 flex flex-col justify-center hover:bg-gray-100 transition-all ease-in-out duration-300 cursor-pointer">
           <h3 className="text-blue-500 text-base font-bold">{name}</h3>
-          <p className="text-gray-500 text-sm">{description}</p>
+          {description && (
+            <p className="text-gray-500 text-xs">{description}</p>
+          )}
         </li>
       </Link>
       <li className="border-t border-gray-300" />
