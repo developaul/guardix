@@ -19,13 +19,21 @@ export const BreadcrumbProject = () => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/workplace/${workplaceId}/projects`}>Projects</Link>
+            <Link
+              className="text-blue-500 hover:text-blue-500 hover:underline text-xl font-semibold"
+              href={`/workplace/${workplaceId}/projects`}
+            >
+              Projects
+            </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/workplace/${workplaceId}/projects/${projectName}`}>
+            <Link
+              className="text-xl font-medium"
+              href={`/workplace/${workplaceId}/projects/${projectName}`}
+            >
               {projectName}
             </Link>
           </BreadcrumbLink>
