@@ -1,9 +1,10 @@
 "use client";
 
 import React, { FC } from "react";
+import { useSelectedLayoutSegments } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSelectedLayoutSegments } from "next/navigation";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -49,10 +50,9 @@ export const CreateWorkplaceForm: FC<CreateWorkplaceFormProps> = ({
   const handleSubmit = async (args: IWorkplaceForm) => {
     try {
       await createWorkplace(args, resourcePathname);
-    } catch (error) {
-      console.error(error);
-    } finally {
       onClose();
+    } catch (error: any) {
+      toast.error(error.message ?? "Something went wrong");
     }
   };
 

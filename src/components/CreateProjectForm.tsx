@@ -2,8 +2,10 @@
 
 import React, { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRightIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -28,7 +30,6 @@ import { Textarea } from "./ui/textarea";
 import { IProjectForm } from "@/interfaces";
 import { projectSchemaForm } from "@/constants";
 import { createProject } from "@/server/routes";
-import { useParams } from "next/navigation";
 
 interface Props {
   isOpen: boolean;
@@ -51,12 +52,10 @@ export const CreateProjectForm: FC<Props> = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (args: IProjectForm) => {
     try {
-      console.log("🚀 ~ handleSubmit ~ args:", args);
       await createProject(args);
-    } catch (error) {
-      console.error(error);
-    } finally {
       onClose();
+    } catch (error: any) {
+      toast.error(error.message ?? "Something went wrong");
     }
   };
 
