@@ -7,3 +7,8 @@ export interface IProject extends z.infer<typeof projectSchema> {
 }
 
 export type IProjectForm = z.infer<typeof projectSchemaForm>;
+
+export interface DeleteProjectArgs {
+  projectSlug: string;
+  workplaceId: string;
+}

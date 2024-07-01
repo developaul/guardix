@@ -1,4 +1,4 @@
-import { IProject, IProjectForm } from "@/interfaces";
+import { DeleteProjectArgs, IProject, IProjectForm } from "@/interfaces";
 import { supabase } from "../connections";
 import { TABLES, projectSchema } from "@/constants";
 import { getSlug } from "@/lib/utils";
@@ -39,6 +39,17 @@ class ProjectController {
     const [project] = projects;
 
     return project;
+  }
+
+  async deleteProject({
+    projectSlug,
+    workplaceId,
+  }: DeleteProjectArgs): Promise<void> {
+    const result = await supabase
+      .from(TABLES.PROJECTS)
+      .delete()
+      .eq("slug", projectSlug)
+      .eq("workplace_id", workplaceId);
   }
 
   async getProjectBySlug(slug: string): Promise<IProject> {
