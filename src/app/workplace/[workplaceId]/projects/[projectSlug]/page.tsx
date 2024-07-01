@@ -1,9 +1,9 @@
 import React from "react";
 import { NextPage } from "next";
-
-import { BreadcrumbProject } from "@/containers";
-import { TypographySmall } from "@/components/ui/Typography";
 import { ArrowRightIcon } from "lucide-react";
+
+import { BreadcrumbProject, ProjectActions } from "@/containers";
+import { TypographySmall } from "@/components/ui/Typography";
 import { StageList } from "@/containers/StageList";
 
 interface Props {
@@ -15,7 +15,11 @@ const ProjectPage: NextPage<Props> = ({ params }) => {
 
   return (
     <section className="flex flex-col gap-4 px-8">
-      <BreadcrumbProject />
+      <div className="flex items-center justify-between">
+        <BreadcrumbProject />
+
+        <ProjectActions />
+      </div>
       <TypographySmall>
         Put your secrets to work with the{" "}
         <a

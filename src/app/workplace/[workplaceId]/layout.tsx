@@ -13,7 +13,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
             <WorkplaceSelect />
           </Suspense>
         </Aside>
-        <main className="flex-1 min-h-0">{children}</main>
+        <main className="flex-1 min-h-0 mt-7">{children}</main>
       </div>
     </div>
   );
